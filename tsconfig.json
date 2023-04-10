@@ -21,6 +21,10 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src/interface"
-, "src/index.tsx", "src/interface/reportWebVitals.ts", "src/engine/evaluation.ts"  ]
+    "src/interface",
+    "src/index.tsx",
+    "src/interface/reportWebVitals.ts",
+    "src/engine/evaluation.ts",
+    "src/interface/App.test.tsx"
+  ]
 }

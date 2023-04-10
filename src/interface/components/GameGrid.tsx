@@ -23,24 +23,12 @@ const GameGrid = (props: GridProps) => {
             newGrid[index] = props.nextPlayer;
             let newPlayer = props.nextPlayer === "X"? "O" : "X";
 
-            console.log("handling move with grid: " + newGrid + " and next player: " + newPlayer);
             props.handleMove(newGrid, newPlayer);
 
             props.setGrid(newGrid);
             props.setPlayer(newPlayer);
             return;
         }
-        console.log("fdfsdfsdf")
-        /* DELETING MOVES
-        props.setPlayer(newGrid[index]);
-        newGrid[index] = "";
-        props.setGrid(newGrid);
-
-        console.log(props.grid);
-        console.log(props.nextPlayer);
-
-        props.handleMove();
-        */
     }
 
 
@@ -63,7 +51,7 @@ const GameGrid = (props: GridProps) => {
                     <div key = {index} className="board-row">
                         {row.map((cell, index2) => {
                             return (
-                                <Square value={cell} handleClick={() => handleClick(index*grid_side_length+index2)} id={crypto.randomUUID()}/>
+                                <Square value={cell} handleClick={() => handleClick(index*grid_side_length+index2)}/>
                             );
                         })}
                     </div>

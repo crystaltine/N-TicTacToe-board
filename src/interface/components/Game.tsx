@@ -17,9 +17,7 @@ const Game = (props: GameProps) => {
     const [evaluation, setEvaluation] = React.useState<number>(0.0);
 
     const getEvalAfterMove = (board: string[], nextPlayer: string) => {
-        let receivedEval = getEvaluation(board, nextPlayer);
-        setEvaluation(receivedEval);
-        console.log("received eval: " + receivedEval)
+        setEvaluation(getEvaluation(board, nextPlayer));
     };
 
     return (

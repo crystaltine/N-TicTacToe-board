@@ -22,7 +22,6 @@ const EvalBar = (props: EvalbarProps) => {
         evalDisplay = Math.abs(props.value).toFixed(props.value >= 10.0? 0 : 1);
     }
 
-    console.log("rendering evalbar with display: " + evalDisplay);
     return (
         <div className="eval-bar">
             <div style={{
