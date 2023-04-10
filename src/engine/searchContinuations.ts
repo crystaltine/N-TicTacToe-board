@@ -1,12 +1,12 @@
 import getEvaluation from "./evaluation";
 
-export function tryNextMoves(boardState: string[], nextPlayer: string) {
+export function tryNextMoves(boardState: string[], nextPlayer: string, winningLines: number[][]) {
     let allEvalContinuations: number[] = []; // An array of arrays [evaluation, index of move]
 
     for (let i = 0; i < boardState.length; i++) {
         if (boardState[i] === "") {
             boardState[i] = nextPlayer;
-            let nextEvaluation: number = getEvaluation(boardState, nextPlayer === "X"? "O" : "X");
+            let nextEvaluation: number = getEvaluation(boardState, nextPlayer === "X"? "O" : "X", winningLines);
 
             if (nextEvaluation >= 10000.0) {
                 allEvalContinuations.push(nextEvaluation-1);

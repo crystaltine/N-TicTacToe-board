@@ -1,5 +1,5 @@
 import React from 'react';
-import './GridStyles.css'
+import '../styles/GridStyles.css'
 
 interface SquareProps {
     value: string;

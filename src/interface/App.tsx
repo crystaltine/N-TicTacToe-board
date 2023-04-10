@@ -1,16 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './styles/App.css';
 import Game from './components/Game';
 
 function App() {
 
-  const gridSize = 9;
+  const gridLength = 3;
+  const winconLength = 3;
 
   return (
     <div className="App">
-      minor trolling
-      <Game gridSize={gridSize}/>
+      <Game gridSize={gridLength**2} winconLength={winconLength}/>
     </div>
   );
 }

@@ -3,9 +3,11 @@ import ajax from 'jquery';
 import GameGrid from './GameGrid';
 import EvalBar from './EvalBar';
 import getEvaluation from '../../engine/evaluation';
+import getWinningLines from '../../engine/generateLinesToCheck';
 
 interface GameProps {
     gridSize: number;
+    winconLength: number;
 }
 
 // 4x4 Tic Tac Toe
@@ -16,8 +18,11 @@ const Game = (props: GameProps) => {
 
     const [evaluation, setEvaluation] = React.useState<number>(0.0);
 
+    const winningLines = getWinningLines(Math.sqrt(props.gridSize), props.winconLength);
+    console.log(winningLines);
+
     const getEvalAfterMove = (board: string[], nextPlayer: string) => {
-        setEvaluation(getEvaluation(board, nextPlayer));
+        setEvaluation(getEvaluation(board, nextPlayer, winningLines));
     };
 
     return (

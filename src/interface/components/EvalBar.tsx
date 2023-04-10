@@ -34,7 +34,7 @@ const EvalBar = (props: EvalbarProps) => {
                 fontSize:"12px",
                 textAlign: "center",
                 fontWeight: "700",
-                transition:"1s",
+                transition:"0.9s",
                 transitionTimingFunction: "cubic-bezier(0.12, 0, 0.39, 0)"}}></div>
             <span className={evalStyleClass}>{evalDisplay}</span>
         </div>

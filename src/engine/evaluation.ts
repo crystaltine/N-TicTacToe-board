@@ -2,21 +2,21 @@ import {checkWin, canForceDraw} from "./checkGameResults";
 import {getBestMoveForX, getBestMoveForO} from "./getBestEvaluations";
 import {tryNextMoves} from "./searchContinuations";
 
-function getEvaluation(boardState: string[], player: string) {
-    let winner = checkWin(boardState);
+function getEvaluation(boardState: string[], player: string, winningLines: number[][]) {
+    let winner = checkWin(boardState, winningLines);
     if (winner !== null) {
-        return winner === "X"? 10009.0 : -10009.0;
+        return winner === "X"? 10000.0 + boardState.length: -10000.0 - boardState.length; // 10009 for 3x3, 10016 for 4x4, etc. so it can handle any size board
     }
-    let allEvalContinuations: number[] = tryNextMoves(boardState, player);
+    let allEvalContinuations: number[] = tryNextMoves(boardState, player, winningLines);
 
     let bestMove: number = (player === "X"? getBestMoveForX(allEvalContinuations) : getBestMoveForO(allEvalContinuations));
 
     if (bestMove < 0.0 && player === "X") {
-        if (canForceDraw("X", boardState)) {
+        if (canForceDraw("X", boardState, winningLines)) {
             return 0.0;
         }
     } else if (bestMove > 0.0 && player === "O") {
-        if (canForceDraw("O", boardState)) {
+        if (canForceDraw("O", boardState, winningLines)) {
             return 0.0;
         }
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import Square from './Square';
-import './GridStyles.css'
+import '../styles/GridStyles.css'
 
 import useState from 'react';
 
