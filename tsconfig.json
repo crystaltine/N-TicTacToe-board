@@ -25,6 +25,7 @@
     "src/index.tsx",
     "src/interface/reportWebVitals.ts",
     "src/engine/evaluation.ts",
-    "src/interface/App.test.tsx"
+    "src/App.test.tsx",
+    "src/setupTests.ts"
   ]
 }
