@@ -20,7 +20,7 @@ function abpruning(boardState: string[], player: string, depth: number, alpha: n
         let nextMoves: string[][] = getNextMovesX(boardState);
         let value: number = -10000.0;
         nextMoves.forEach(function(nextPos){
-            value = Math.max(value, abpruning(nextPos, "X", depth − 1, alpha, beta));
+            value = Math.max(value, abpruning(nextPos, "O", depth − 1, alpha, beta));
             if (value > beta){
                 break;
             }
@@ -32,7 +32,7 @@ function abpruning(boardState: string[], player: string, depth: number, alpha: n
         let nextMoves: string[][] = getNextMovesO(boardState);
         let value: number = 10000.0;
         nextMoves.forEach(function(nextPos){
-            value = Math.min(value, abpruning(nextPos, "O", depth − 1, alpha, beta));
+            value = Math.min(value, abpruning(nextPos, "X", depth − 1, alpha, beta));
             if(value < alpha){
                 break;
             }
