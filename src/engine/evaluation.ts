@@ -3,16 +3,39 @@ import {getBestMoveForX, getBestMoveForO} from "./getBestEvaluations";
 import {tryNextMoves} from "./searchContinuations";
 
 
-// TODO - integrate implementation of ab pruning and fix end evals
+// TODO - integrate implementation of ab pruning
 // TODO - check if ab pruning works
 // TODO - optimize ab pruning (check diagonals first?)
 
 function abpruning(boardState: string[], player: string, depth: number, alpha: number, beta: number) {
     
-    //add end state evals
+    let size: number = Math.sqrt(boardState.length);
+    let lines: number[][] = zeroDepthEval(boardState, size);
+    
+    lines[0].forEach(function(score){
+        if(score === size){
+            return 10000 + boardState.length;
+        }
+    });
+    
+    lines[1].forEach(function(score){
+        if(score === -1 * size){
+            return -10000 - boardState.length;
+        }
+    });
     
     if (depth === 0){
-        return zeroDepthEval(boardState);
+        let score: number = 0;
+        
+        for(let i = 0; i < lines.length; i++){
+        if(lines[0][i] === 0){
+           score += lines[1][i];
+        }
+        if(lines[1][i] === 0){
+           score += lines[0][i];
+        }
+    }
+        return score;
     }
     
     if (player === "X") {
@@ -66,9 +89,8 @@ function getNextMovesO(boardState: string[]){
     return nextMoves;
 }
 
-function zeroDepthEval(boardState: string[]){
-    let score: number = 0;
-    let size: number = Math.sqrt(boardState.length);
+function zeroDepthEval(boardState: string[], size: number){
+    let lines: number[][];
     let linesX: number[] = Array(size * 2 + 2);
     let linesO: number[] = Array(size * 2 + 2);
     for(let i = 0; i < boardState.length; i++){
@@ -93,16 +115,9 @@ function zeroDepthEval(boardState: string[]){
            }
         }
     }
-    
-    for(let i = 0; i < lines.length; i++){
-        if(linesX[i] === 0){
-           score += linesO[i];
-        }
-        if(linesO[i] === 0){
-           score += linesX[i];
-        }
-    }
-    return score;
+    lines.push(linesX);
+    lines.push(linesO);
+    return lines;
 }
 
 
