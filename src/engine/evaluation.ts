@@ -3,7 +3,9 @@ import {getBestMoveForX, getBestMoveForO} from "./getBestEvaluations";
 import {tryNextMoves} from "./searchContinuations";
 
 
-// TODO - integrate scuffed implementation of ab pruning and fix 0 depth evals
+// TODO - integrate implementation of ab pruning and fix 0 depth evals
+// TODO - check if ab pruning works
+// TODO - optimize ab pruning (check diagonals first?)
 
 function abpruning(boardState: string[], player: string, depth: number, alpha: number, beta: number) {
     
