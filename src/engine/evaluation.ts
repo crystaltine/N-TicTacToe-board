@@ -29,10 +29,10 @@ function abpruning(boardState: string[], player: string, depth: number, alpha: n
         
         for(let i = 0; i < lines.length; i++){
         if(lines[0][i] === 0){
-           score += lines[1][i];
+           score += Math.pow(2, lines[1][i]);
         }
         if(lines[1][i] === 0){
-           score += lines[0][i];
+           score += Math.pow(2, lines[0][i]);
         }
     }
         return score;
