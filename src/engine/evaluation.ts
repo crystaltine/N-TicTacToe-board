@@ -3,17 +3,16 @@ import {getBestMoveForX, getBestMoveForO} from "./getBestEvaluations";
 import {tryNextMoves} from "./searchContinuations";
 
 
-// TODO - integrate implementation of ab pruning and fix 0 depth evals
+// TODO - integrate implementation of ab pruning and fix end evals
 // TODO - check if ab pruning works
 // TODO - optimize ab pruning (check diagonals first?)
 
 function abpruning(boardState: string[], player: string, depth: number, alpha: number, beta: number) {
     
-    //add win conditions
+    //add end state evals
     
     if (depth === 0){
-        return 0.0;
-        //implement 0-depth calculations
+        return zeroDepthEval(boardState);
     }
     
     if (player === "X") {
@@ -66,6 +65,46 @@ function getNextMovesO(boardState: string[]){
     }
     return nextMoves;
 }
+
+function zeroDepthEval(boardState: string[]){
+    let score: number = 0;
+    let size: number = Math.sqrt(boardState.length);
+    let linesX: number[] = Array(size * 2 + 2);
+    let linesO: number[] = Array(size * 2 + 2);
+    for(let i = 0; i < boardState.length; i++){
+        if(boardState[i] === "X"){
+           linesX[i % size] ++;
+           linesX[i / size + size] ++;
+           if(i % (size + 1) === 0){
+               linesX[size*2 + 1] ++;
+           }
+           if(i % (size - 1) === 0 && i !== 0 && i !== boardState.length - 1){
+               linesX[size*2 + 2] ++;
+           }
+        }
+        if(boardState[i] === "O"){
+           linesO[i % size] --;
+           linesO[i / size + size] --;
+           if(i % (size + 1) === 0){
+               linesO[size*2 + 1] --;
+           }
+           if(i % (size - 1) === 0 && i !== 0 && i !== boardState.length - 1){
+               linesO[size*2 + 2] --;
+           }
+        }
+    }
+    
+    for(let i = 0; i < lines.length; i++){
+        if(linesX[i] === 0){
+           score += linesO[i];
+        }
+        if(linesO[i] === 0){
+           score += linesX[i];
+        }
+    }
+    return score;
+}
+
 
 function getEvaluation(boardState: string[], player: string, winningLines: number[][]) {
 
