@@ -3,8 +3,67 @@ import {getBestMoveForX, getBestMoveForO} from "./getBestEvaluations";
 import {tryNextMoves} from "./searchContinuations";
 
 
-// TODO - AB pruning for evals generated in trynextmoves
+// TODO - integrate scuffed implementation of ab pruning and fix 0 depth evals
 
+function abpruning(boardState: string[], player: string, depth: number, alpha: number, beta: number) {
+    
+    //add win conditions
+    
+    if (depth === 0){
+        return 0.0;
+        //implement 0-depth calculations
+    }
+    
+    if (player === "X") {
+        let nextMoves: string[][] = getNextMovesX(boardState);
+        let value: number = -10000.0;
+        nextMoves.forEach(function(nextPos){
+            value = max(value, abpruning(nextPos, "X", depth − 1, alpha, beta));
+            if (value > beta){
+                break;
+            }
+            alpha = max(alpha, value);
+        });
+        return value;
+    }
+    else{
+        let nextMoves: string[][] = getNextMovesO(boardState);
+        let value: number = 10000.0;
+        nextMoves.forEach(function(nextPos){
+            value = min(value, abpruning(nextPos, "O", depth − 1, alpha, beta));
+            if(value < alpha){
+                break;
+            }
+            beta = min(beta, value);
+        });
+        return value;
+    }
+}
+
+function getNextMovesX(boardState: string[]){
+    let nextMoves: string[][];
+    let nextMove: string[];
+    for(let i = 0; i < boardState.length; i++){
+        if(string[i] !== "X" && string[i] !== "O"){
+            nextMove = [...boardState];
+            nextMove[i] = "X";
+            nextMoves.push(nextMove);
+        }
+    }
+    return nextMoves;
+}
+function getNextMovesO(boardState: string[]){
+    let nextMoves: string[][];
+    let nextMove: string[];
+    for(let i = 0; i < boardState.length; i++){
+        if(string[i] !== "X" && string[i] !== "O"){
+            nextMove = [...boardState];
+            nextMove[i] = "O";
+            nextMoves.push(nextMove);
+        }
+    }
+    return nextMoves;
+}
 
 function getEvaluation(boardState: string[], player: string, winningLines: number[][]) {
 
