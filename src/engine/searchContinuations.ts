@@ -1,5 +1,7 @@
 import getEvaluation from "./evaluation";
 
+// TODO - AB pruning for evals generated in trynextmoves
+
 export function tryNextMoves(boardState: string[], nextPlayer: string, winningLines: number[][]) {
     let allEvalContinuations: number[] = []; // An array of arrays [evaluation, index of move]
 

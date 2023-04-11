@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
-import getEvaluation from '../engine/evaluation';
-import getWinningLines from '../engine/generateLinesToCheck';
-import { canForceDraw, checkWin } from '../engine/checkGameResults';
+import App from './interface/App';
+import getEvaluation from './engine/evaluation';
+import getWinningLines from './engine/generateLinesToCheck';
+import { canForceDraw, checkWin } from './engine/checkGameResults';
 
 
 function arraysEqual(a: Array<any>, b: Array<any>) {
@@ -52,35 +52,40 @@ const winningLinesFor3x3WinconIs2 = [
     [4, 6], [5, 7], [3, 7], [4, 8]
 ];
 
-describe('Testing Evaluation function for 3x3 board', () => {
+describe('Evaluation for 3x3 board', () => {
     test('Evaluation for empty 3x3 board should be 0.0', () => {
         expect(getEvaluation(startingBoard, "X", winningLinesFor3x3)).toBe(0.0);
     });
 });
 
-describe('Testing Evaluation function for win in 1 move', () => {
+describe('Evaluation for X wins in 1 move', () => {
     test('Evaluation should me M1 for X(white) (10008)', () => {
         expect(getEvaluation(winInOneMoveBoard, "X", winningLinesFor3x3)).toBe(10008.0);
     });
 });
 
-describe('Testing Evaluation function for black losing on move 2', () => {
+describe('Evaluation for black losing on move 2', () => {
     test('Evaluation should be M5 for X(white) (10004)', () => {
         expect(getEvaluation(blackBlundersSecondMove, "X", winningLinesFor3x3)).toBe(10004.0);
     });
 });
 
-describe('Testing Evaluation function for black winning in 2', () => {
+describe('Evaluation for black winning in 2', () => {
     test('Evaluation should be M2 for O(black) (-10007)', () => {
         expect(getEvaluation(blackWinsInTwoMoves, "X", winningLinesFor3x3)).toBe(-10007.0);
     });
 });
 
-
 describe('Testing getWinningLines for a 3x3 board with connect 3 (default tictactoe)', () => {
     test('Winning lines for 3x3-3 dont match', () => {
         let equal = deepArraysEqual(getWinningLines(3, 3), winningLinesFor3x3);
         expect(equal).toBe(true);
+    });
+});
+
+describe('Testing getWinningLines 3x3-4 (no winning lines)', () => {
+    test('There should be 0 winning lines.', () => {
+        expect(getWinningLines(3, 4).length).toBe(0);
     });
 });
 
