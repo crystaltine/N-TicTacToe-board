@@ -7,13 +7,12 @@ import staticEval from "./staticEval";
 // TODO - check if ab pruning works
 // TODO - optimize ab pruning (check diagonals first?)
 
-function abpruning(boardState: string[], player: string, depth: number, alpha: number, beta: number) {
+function abpruning(boardState: string[], player: string, depth: number, winlength: number, alpha: number, beta: number) {
     
-    let size: number = Math.sqrt(boardState.length);
     let lines: number[][] = staticEval(boardState, size);
     
     lines[0].forEach(function(score){
-        if(score === size){
+        if(score === winlength){
             return 10000 + boardState.length;
         }
     });
@@ -42,7 +41,7 @@ function abpruning(boardState: string[], player: string, depth: number, alpha: n
         let nextMoves: string[][] = getNextMovesX(boardState);
         let value: number = -10000.0;
         nextMoves.forEach(function(nextPos){
-            value = Math.max(value, abpruning(nextPos, "O", depth - 1, alpha, beta));
+            value = Math.max(value, abpruning(nextPos, "O", depth - 1, winlength, alpha, beta));
             if (value > beta){
                 return
             }
@@ -54,7 +53,7 @@ function abpruning(boardState: string[], player: string, depth: number, alpha: n
         let nextMoves: string[][] = getNextMovesO(boardState);
         let value: number = 10000.0;
         nextMoves.forEach(function(nextPos){
-            value = Math.min(value, abpruning(nextPos, "X", depth - 1, alpha, beta));
+            value = Math.min(value, abpruning(nextPos, "X", depth - 1, winlength, alpha, beta));
             if(value < alpha) {
                 return
             }
