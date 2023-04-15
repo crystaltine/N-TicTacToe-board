@@ -6,6 +6,7 @@ import staticEval from "./staticEval";
 // TODO - integrate implementation of ab pruning
 // TODO - check if ab pruning works
 // TODO - optimize ab pruning (check diagonals first?)
+// TODO - add smaller diagonal checks for variable winlength
 
 function abpruning(boardState: string[], player: string, depth: number, winlength: number, alpha: number, beta: number) {
     
